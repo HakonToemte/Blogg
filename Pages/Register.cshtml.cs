@@ -13,12 +13,12 @@ namespace Blogg.Pages
 {
     public class RegisterModel : PageModel
     {
-        private readonly IUserValidator _validator;
-        private readonly IUserProvider _provider;
-        public RegisterModel(IUserValidator Validator, IUserProvider Provider)
+        private readonly IBlogValidator _blogvalidator;
+        private readonly IBlogProvider _blogprovider;
+        public RegisterModel(IBlogValidator Validator, IBlogProvider Provider)
         {
-            _validator = Validator;
-            _provider = Provider;
+            _blogvalidator = Validator;
+            _blogprovider = Provider;
         }
 
         public IActionResult OnGet()
@@ -26,12 +26,12 @@ namespace Blogg.Pages
             return Page();
         }
         [BindProperty]
-        public User New_User {get; set; }
+        public Blog New_User {get; set; }
         public string Error {get;set;}
 
         public async Task<IActionResult> OnPostAsync()
         {
-            string[] error_array = _validator.IsValid(New_User);
+            string[] error_array = _blogvalidator.IsValid(New_User);
             if (error_array.Length!=0)
             {
                 Error = error_array[0];
@@ -40,9 +40,9 @@ namespace Blogg.Pages
             New_User.PasswordHash = BC.HashPassword(New_User.PasswordHash);
             try
             {                                            // TRY CATCH FOR DUPLICATE NAMES
-                await _provider.AddUser(New_User);
-                HttpContext.Session.SetInt32("_Id", New_User.Id);
-                HttpContext.Session.SetString("_Name", New_User.Name);
+                await _blogprovider.AddBlog(New_User);
+                HttpContext.Session.SetInt32("_Id", New_User.UserId);
+                HttpContext.Session.SetString("_Name", New_User.UserName);
                 return RedirectToPage("./Index");
             }catch (Exception duplicate_error)
             {

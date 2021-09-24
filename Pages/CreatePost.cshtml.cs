@@ -11,40 +11,40 @@ namespace Blogg.Pages
 {
     public class CreatePostModel : PageModel
     {
-        private readonly IBlogPostValidator _validator;
-        private readonly IBlogPostProvider _provider;
-        private readonly IUserProvider _userprovider;
-        public CreatePostModel(IBlogPostValidator Validator, IBlogPostProvider Provider, IUserProvider UserProvider)
+        private readonly IPostValidator _postvalidator;
+        private readonly IPostProvider _postprovider;
+        private readonly IBlogProvider _blogprovider;
+        public CreatePostModel(IPostValidator Validator, IPostProvider Provider, IBlogProvider BlogProvider)
         {
-            _validator = Validator;
-            _provider = Provider;
-            _userprovider =UserProvider;
+            _postvalidator = Validator;
+            _postprovider = Provider;
+            _blogprovider =BlogProvider;
         }
 
         public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.GetString("_Name") != null)
             {
-                LoggedUser = await _userprovider.GetUser(HttpContext.Session.GetString("_Name"));
+                LoggedUser = await _blogprovider.GetBlog(HttpContext.Session.GetString("_Name"));
             }
             return Page();
         }
         [BindProperty]
-        public BlogPost Post {get; set; }
-        public User LoggedUser{get; set;}
+        public Post Post {get; set; }
+        public Blog LoggedUser{get; set;}
         public string Error {get;set;}
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (HttpContext.Session.GetString("_Name") != null)
             {
-                LoggedUser = await _userprovider.GetUser(HttpContext.Session.GetString("_Name"));
+                LoggedUser = await _blogprovider.GetBlog(HttpContext.Session.GetString("_Name"));
             }
             else{
                 return RedirectToPage("./Admin");
             }
-            Post.User = LoggedUser;
-            string[] error_array = _validator.IsValid(Post);
+            Post.Blog = LoggedUser;
+            string[] error_array = _postvalidator.IsValid(Post);
             if (error_array.Length!=0)
             {
                 Error = error_array[0];
@@ -52,7 +52,7 @@ namespace Blogg.Pages
             }
             try
             {                                            // TRY CATCH FOR DUPLICATE NAMES
-                await _provider.AddBlogPost(Post);
+                await _postprovider.AddPost(Post);
                 return RedirectToPage("./Admin");
             }catch (Exception duplicate_error)
             {

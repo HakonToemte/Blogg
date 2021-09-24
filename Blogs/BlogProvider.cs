@@ -6,49 +6,49 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogg
 {
-    public class UserProvider : IUserProvider
+    public class BlogProvider : IBlogProvider
     {
         private readonly BlogContext _blogContext;
 
-        public UserProvider(BlogContext blogContext)
+        public BlogProvider(BlogContext blogContext)
         {
             _blogContext = blogContext;
         }
 
-        public async Task<User[]> GetUsers()
+        public async Task<Blog[]> GetBlogs()
         {
-            var list = await _blogContext.Users.ToListAsync();
-            User[] new_list = list.ToArray();
+            var list = await _blogContext.Blogs.ToListAsync();
+            Blog[] new_list = list.ToArray();
             return new_list;
         }
 
-        public Task AddUser(User user){
-            _blogContext.Users.Add(user);
+        public Task AddBlog(Blog blog){
+            _blogContext.Blogs.Add(blog);
             _blogContext.SaveChanges();
             return Task.CompletedTask;
         }
 
-        public async Task<User> GetUser(string name){
-            var user = _blogContext.Users.Where(b => b.Name == name)
+        public async Task<Blog> GetBlog(string name){
+            var blog = _blogContext.Blogs.Where(b => b.UserName == name)
                     .FirstOrDefault();
-            if (user == null)
+            if (blog == null)
             {
                 return null;
             }
-            return await Task.Run(() => user);
+            return await Task.Run(() => blog);
         }
 
-        public Task UpdateUser(int id, User user)
+        public Task UpdateBlog(int id, Blog blog)
         {
-            _blogContext.Users.Update(user);
+            _blogContext.Blogs.Update(blog);
             _blogContext.SaveChanges();
             
             return Task.CompletedTask;
         }
 
-        public Task RemoveUser(int id)
+        public Task RemoveBlog(int id)
         {
-            _blogContext.Users.Remove(_blogContext.Users.Find(id));
+            _blogContext.Blogs.Remove(_blogContext.Blogs.Find(id));
             _blogContext.SaveChanges();
             return Task.CompletedTask;
         }

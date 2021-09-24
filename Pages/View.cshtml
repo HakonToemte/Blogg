@@ -4,12 +4,12 @@
     ViewData["Title"] = "View";
     if (Model.LoggedUser != null)
     {
-        Layout = "_UserLayout";
+        Layout = "_LoggedLayout";
     }
 }
 <center>
     <h1 class="display-4" style=center>@Model.Post.Title</h1>
-    <h2 class="display-4" style=center>Written by @Model.Author.Name</h2>
+    <h2 class="display-4" style=center>Written by @Model.Author.UserName</h2>
 </center>
 <br>
 <p class="bread"> @Model.Post.Text</p>

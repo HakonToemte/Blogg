@@ -10,59 +10,59 @@ namespace Blogg.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "blogposts",
+                name: "posts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: true),
+                    BlogUserId = table.Column<int>(type: "INTEGER", nullable: true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Text = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_blogposts", x => x.Id);
+                    table.PrimaryKey("PK_posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_blogposts_users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_posts_users_BlogUserId",
+                        column: x => x.BlogUserId,
                         principalTable: "users",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_blogposts_Title",
-                table: "blogposts",
+                name: "IX_posts_BlogUserId",
+                table: "posts",
+                column: "BlogUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_posts_Title",
+                table: "posts",
                 column: "Title",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_blogposts_UserId",
-                table: "blogposts",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_users_Name",
+                name: "IX_users_UserName",
                 table: "users",
-                column: "Name",
+                column: "UserName",
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "blogposts");
+                name: "posts");
 
             migrationBuilder.DropTable(
                 name: "users");

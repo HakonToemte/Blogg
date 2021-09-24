@@ -13,10 +13,10 @@ namespace Blogg.Pages
 {
     public class LoginModel : PageModel
     {
-        private readonly IUserProvider _provider;
-        public LoginModel(IUserProvider Provider)
+        private readonly IBlogProvider _blogprovider;
+        public LoginModel(IBlogProvider Provider)
         {
-            _provider = Provider;
+            _blogprovider = Provider;
         }
 
         public IActionResult OnGet()
@@ -31,12 +31,12 @@ namespace Blogg.Pages
             }
         }
         [BindProperty]
-        public User User_Attempt {get;set;}
+        public Blog User_Attempt {get;set;}
         public string Error {get;set;}
 
         public async Task<IActionResult> OnPostAsync()
         {                                               // TRY CATCH FOR DUPLICATE NAMES
-                var account = await _provider.GetUser(User_Attempt.Name);
+                var account = await _blogprovider.GetBlog(User_Attempt.UserName);
                 if (account == null || !BC.Verify(User_Attempt.PasswordHash, account.PasswordHash))
                 {
                     Error = $"Wrong credentials";
@@ -44,8 +44,8 @@ namespace Blogg.Pages
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("_Id", User_Attempt.Id);
-                    HttpContext.Session.SetString("_Name", User_Attempt.Name);
+                    HttpContext.Session.SetInt32("_Id", User_Attempt.UserId);
+                    HttpContext.Session.SetString("_Name", User_Attempt.UserName);
                     return RedirectToPage("./Index");
                 }
 

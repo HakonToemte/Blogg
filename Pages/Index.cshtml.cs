@@ -11,17 +11,17 @@ namespace Blogg.Pages
 {
     public class IndexModel : PageModel
     {
-        public List<BlogPost> BlogPosts;
+        public List<Post> Posts;
         public string LoggedUser;
-        private IBlogPostProvider _provider {get;}
-        public IndexModel(IBlogPostProvider Provider)
+        private IPostProvider _postprovider {get;}
+        public IndexModel(IPostProvider Provider)
         {
-            _provider = Provider;
+            _postprovider = Provider;
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            var blogposts = await _provider.GetPosts();
-            BlogPosts = blogposts.ToList();
+            var posts = await _postprovider.GetPosts();
+            Posts = posts.ToList();
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("_Name")))
             {
                 LoggedUser = HttpContext.Session.GetString("_Name");

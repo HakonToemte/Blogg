@@ -29,10 +29,10 @@ namespace Blogg
             });
             services.AddDbContext<BlogContext>(
                 options => options.UseSqlite("Data Source=sqlitedb1;Cache=Shared"));
-            services.AddScoped<IBlogPostValidator, BlogPostValidator>();
-            services.AddScoped<IBlogPostProvider, BlogPostProvider>();
-            services.AddScoped<IUserValidator, UserValidator>();
-            services.AddScoped<IUserProvider, UserProvider>();
+            services.AddScoped<IPostValidator, PostValidator>();
+            services.AddScoped<IPostProvider, PostProvider>();
+            services.AddScoped<IBlogValidator, BlogValidator>();
+            services.AddScoped<IBlogProvider, BlogProvider>();
             services.AddRazorPages();
         }
 

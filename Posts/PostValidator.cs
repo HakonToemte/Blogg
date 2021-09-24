@@ -3,14 +3,14 @@ using System;
 
 namespace Blogg
 {
-    public class BlogPostValidator : IBlogPostValidator
+    public class PostValidator : IPostValidator
     {
-        public string[] IsValid(BlogPost blogPost){
+        public string[] IsValid(Post post){
             List<string> list= new List<string>();
-            if (blogPost.Title == null){
+            if (post.Title == null){
                 list.Add("Title can not be empty");
             }
-            if (blogPost.Text == null){
+            if (post.Text == null){
                 list.Add("Text can not be empty");
             }
             string[] array = list.ToArray();

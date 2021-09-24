@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogg.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20210923224836_InitialCreate")]
+    [Migration("20210924192403_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,10 +18,33 @@ namespace Blogg.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.10");
 
-            modelBuilder.Entity("Blogg.BlogPost", b =>
+            modelBuilder.Entity("Blogg.Blog", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("users");
+                });
+
+            modelBuilder.Entity("Blogg.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("BlogUserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Text")
@@ -30,46 +53,28 @@ namespace Blogg.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("BlogUserId");
 
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("blogposts");
+                    b.ToTable("posts");
                 });
 
-            modelBuilder.Entity("Blogg.User", b =>
+            modelBuilder.Entity("Blogg.Post", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.HasOne("Blogg.Blog", "Blog")
+                        .WithMany("Posts")
+                        .HasForeignKey("BlogUserId");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("users");
+                    b.Navigation("Blog");
                 });
 
-            modelBuilder.Entity("Blogg.BlogPost", b =>
+            modelBuilder.Entity("Blogg.Blog", b =>
                 {
-                    b.HasOne("Blogg.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

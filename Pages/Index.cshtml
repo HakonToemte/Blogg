@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home page";
     if (Model.LoggedUser != null)
     {
-        Layout = "_UserLayout";
+        Layout = "_LoggedLayout";
     }
     string[] TableHeaders = new string[] {"Author"
                     ,"Title"
@@ -30,10 +30,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var post in Model.BlogPosts)
+            @foreach (var post in Model.Posts)
             {
                 <tr>
-                    <td>@post.User.Name</td>
+                    <td>@post.Blog.UserName</td>
                     <td>@post.Title</td>
                     @{
                         if (post.Text.Length > 100) 

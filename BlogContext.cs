@@ -19,8 +19,8 @@ namespace Blogg
         {
             DbPath = "sqlitedb1";
         }
-        public DbSet<BlogPost> BlogPosts {get; set; }
-        public DbSet<User> Users {get; set; }
+        public DbSet<Post> Posts {get; set; }
+        public DbSet<Blog> Blogs {get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,15 +29,15 @@ namespace Blogg
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BlogPost>().ToTable("blogposts");
-            modelBuilder.Entity<BlogPost>(entity => {
+            modelBuilder.Entity<Post>().ToTable("posts");
+            modelBuilder.Entity<Post>(entity => {
                  entity.HasKey(k=>k.Id);
                  entity.HasIndex(i=>i.Title).IsUnique();
             });
-            modelBuilder.Entity<User>().ToTable("users");
-            modelBuilder.Entity<User>(entity => {
-                 entity.HasKey(f=>f.Id);
-                 entity.HasIndex(g=>g.Name).IsUnique();
+            modelBuilder.Entity<Blog>().ToTable("users");
+            modelBuilder.Entity<Blog>(entity => {
+                 entity.HasKey(f=>f.UserId);
+                 entity.HasIndex(g=>g.UserName).IsUnique();
             });
             base.OnModelCreating(modelBuilder);
         }

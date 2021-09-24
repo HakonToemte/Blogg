@@ -5,14 +5,14 @@
     ViewData["Title"] = "Home page";
     if (Model.LoggedUser != null)
     {
-        Layout = "_UserLayout";
+        Layout = "_LoggedLayout";
     }
     string[] TableHeaders = new string[] {"Title"
                     ,"Text",
                     "Edit"};
 }
 
-<h1 class="display-4">Administrate yo3123ur posts</h1>
+<h1 class="display-4">Administrate your posts</h1>
 <div class="table">
     <form method="post">
     <table class = "table table-bordered">
@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var post in Model.BlogPosts)
+            @foreach (var post in Model.Posts)
             {
                 <tr>
                     <td>@post.Title</td>

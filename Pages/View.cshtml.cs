@@ -11,13 +11,13 @@ namespace Blogg.Pages
 {
     public class ViewModel : PageModel
     {
-        private readonly IBlogPostProvider _provider;
-        public User Author;
+        private readonly IPostProvider _postprovider;
+        public Blog Author;
         public string LoggedUser;
 
-        public ViewModel(IBlogPostProvider Provider)
+        public ViewModel(IPostProvider Provider)
         {
-            _provider = Provider;
+            _postprovider = Provider;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -31,8 +31,8 @@ namespace Blogg.Pages
                 return NotFound();
             }
 
-            Post = await _provider.GetBlogPost(id.Value);
-            Author = Post.User;
+            Post = await _postprovider.GetPost(id.Value);
+            Author = Post.Blog;
             
             if (Post == null)
             {
@@ -41,7 +41,7 @@ namespace Blogg.Pages
             return Page();
         }
         [BindProperty]
-        public BlogPost Post {get; set; }
+        public Post Post {get; set; }
 
     }
 

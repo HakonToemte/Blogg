@@ -11,24 +11,24 @@ namespace Blogg.Pages
 {
     public class EditModel : PageModel
     {
-        private readonly IBlogPostValidator _validator;
-        private readonly IBlogPostProvider _provider;
-        private readonly IUserProvider _userprovider;
-        public User LoggedUser;
+        private readonly IPostValidator _postvalidator;
+        private readonly IPostProvider _postprovider;
+        private readonly IBlogProvider _blogprovider;
+        public Blog LoggedUser;
         
 
-        public EditModel(IBlogPostValidator Validator, IBlogPostProvider Provider, IUserProvider UserProvider)
+        public EditModel(IPostValidator Validator, IPostProvider Provider, IBlogProvider BlogProvider)
         {
-            _validator = Validator;
-            _provider = Provider;
-            _userprovider = UserProvider;
+            _postvalidator = Validator;
+            _postprovider = Provider;
+            _blogprovider = BlogProvider;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (HttpContext.Session.GetString("_Name") != null)
             {
-                LoggedUser = await _userprovider.GetUser(HttpContext.Session.GetString("_Name"));
+                LoggedUser = await _blogprovider.GetBlog(HttpContext.Session.GetString("_Name"));
             }
             else{
                 return RedirectToPage("./Login");
@@ -38,7 +38,7 @@ namespace Blogg.Pages
                 return NotFound();
             }
 
-            Post = await _provider.GetBlogPost(id.Value);
+            Post = await _postprovider.GetPost(id.Value);
 
             if (Post == null)
             {
@@ -47,22 +47,22 @@ namespace Blogg.Pages
             return Page();
         }
         [BindProperty]
-        public BlogPost Post {get; set; }
+        public Post Post {get; set; }
         public string Error{get;set;}
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            var postToUpdate = await _provider.GetBlogPost(id);
+            var postToUpdate = await _postprovider.GetPost(id);
             if (postToUpdate == null)
             {
                 return NotFound();
             }
-            if (await TryUpdateModelAsync<BlogPost>(
+            if (await TryUpdateModelAsync<Post>(
                 postToUpdate,
                 "post",
                 s => s.Title, s => s.Text))
             {
-                string[] validarray = _validator.IsValid(postToUpdate);
+                string[] validarray = _postvalidator.IsValid(postToUpdate);
                 if (validarray.Length!= 0)
                 {
                     Error= validarray[0];
@@ -70,7 +70,7 @@ namespace Blogg.Pages
                 }
                 try
                 {                                            //FOR DUPLICATE NAMES
-                    await _provider.UpdateBlogPost(id, postToUpdate);
+                    await _postprovider.UpdatePost(id, postToUpdate);
                     return RedirectToPage("./Admin");
                 }catch (Exception duplicate_error)
                 {

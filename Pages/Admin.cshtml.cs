@@ -11,31 +11,31 @@ namespace Blogg.Pages
 {
     public class AdminModel : PageModel
     {
-        public List<BlogPost> BlogPosts;
-        private IBlogPostProvider _provider {get;}
-        private IUserProvider _userprovider {get;}
-        public User LoggedUser{get; set;}
-        public AdminModel(IBlogPostProvider Provider, IUserProvider Userprovider)
+        public List<Post> Posts;
+        private IPostProvider _postprovider {get;}
+        private IBlogProvider _blogprovider {get;}
+        public Blog LoggedUser{get; set;}
+        public AdminModel(IPostProvider Provider, IBlogProvider Blogprovider)
         {
-            _provider = Provider;
-            _userprovider = Userprovider;
+            _postprovider = Provider;
+            _blogprovider = Blogprovider;
         }
         public async Task<IActionResult> OnGetAsync()
         {
             if (HttpContext.Session.GetString("_Name") != null)
             {
-                LoggedUser = await _userprovider.GetUser(HttpContext.Session.GetString("_Name"));
+                LoggedUser = await _blogprovider.GetBlog(HttpContext.Session.GetString("_Name"));
             }
-            var blogposts = await _provider.GetPostsMadeBy(LoggedUser);
-            BlogPosts = blogposts.ToList();
+            var posts = await _postprovider.GetPostsMadeBy(LoggedUser);
+            Posts = posts.ToList();
             return Page();
         }
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            var contact = await _provider.GetBlogPost(id);
+            var contact = await _postprovider.GetPost(id);
             if (contact != null)
             {
-                await _provider.RemoveBlogPost(id);
+                await _postprovider.RemovePost(id);
             }
 
             return RedirectToPage();

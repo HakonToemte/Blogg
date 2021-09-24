@@ -3,14 +3,14 @@ using System;
 
 namespace Blogg
 {
-    public class UserValidator : IUserValidator
+    public class BlogValidator : IBlogValidator
     {
-        public string[] IsValid(User user){
+        public string[] IsValid(Blog blog){
             List<string> list= new List<string>();
-            if (user.Name == null){
+            if (blog.UserName == null){
                 list.Add("Name can not be empty");
             }
-            if (user.PasswordHash == null){
+            if (blog.PasswordHash == null){
                 list.Add("Password can not be empty");
             }
             string[] array = list.ToArray();
