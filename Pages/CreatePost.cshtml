@@ -1,0 +1,28 @@
+@page 
+@model CreatePostModel
+@{
+    ViewData["Title"] = "Create Post";
+    if (Model.LoggedUser != null)
+    {
+        Layout = "_UserLayout";
+    }
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to create new posts.</p>
+<p>Create a blog:</p>
+<p style="color:red">@Model.Error</p>
+
+<form method="post">
+    Title:
+    <br>
+    <input asp-for="Post.Title"/>
+    <br>
+    Text:
+    <br>
+    <textarea asp-for="Post.Text" rows = "12" cols = "170">
+    </textarea>
+    <br>
+    <br>
+    <input type="submit" />
+</form>

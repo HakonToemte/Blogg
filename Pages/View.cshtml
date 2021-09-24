@@ -1,0 +1,15 @@
+@page "{id:int}"
+@model ViewModel
+@{
+    ViewData["Title"] = "View";
+    if (Model.LoggedUser != null)
+    {
+        Layout = "_UserLayout";
+    }
+}
+<center>
+    <h1 class="display-4" style=center>@Model.Post.Title</h1>
+    <h2 class="display-4" style=center>Written by @Model.Author.Name</h2>
+</center>
+<br>
+<p class="bread"> @Model.Post.Text</p>
