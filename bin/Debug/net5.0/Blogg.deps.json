@@ -36,6 +36,7 @@
           "BCrypt-Official": "0.1.109",
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Mvc.Testing": "5.0.9",
+          "Microsoft.EntityFrameworkCore": "5.0.10",
           "Microsoft.EntityFrameworkCore.Design": "5.0.10",
           "Microsoft.EntityFrameworkCore.Sqlite": "5.0.10",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
