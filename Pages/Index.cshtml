@@ -1,56 +1,31 @@
-﻿@page
+@page
 @model IndexModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Index";
     if (Model.LoggedUser != null)
     {
         Layout = "_LoggedLayout";
     }
-    string[] TableHeaders = new string[] {"Author"
-                    ,"Title"
-                    ,"Text",
-                    "View"};
 }
-
-<h1 class="display-4">Welcome @Model.LoggedUser</h1>
-<div class="table">
-    <form method="post">
-    <table class = "table table-bordered">
-        <thead>
-            <tr>
-                @{
-                    foreach (var head in TableHeaders)
-                    {
-                        <th>
-                            @head
-                        </th>
-                    }
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var post in Model.Posts)
-            {
-                <tr>
-                    <td>@post.Blog.UserName</td>
-                    <td>@post.Title</td>
-                    @{
-                        if (post.Text.Length > 100) 
-                        {
-                            <td>@post.Text[0..100] ...</td>
-                        }
-                        else
-                        {
-                            <td>@post.Text </td>
-                        }
-                    }
-                    <td>
-                    <a asp-page="./View" asp-route-id="@post.Id"> View</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    </form>
-</div>
+@foreach (Blog blog in Model.Blogs){
+    string author = (blog.UserName + "s");
+    Post post =blog.Posts.Last();
+    <center>
+        <h1 class="display-4" style=center>@author blog</h1>
+        <h1 class="display-4" style=center>@post.Title</h1>
+    </center>
+    <br>
+    if (post.Text.Length > 1000) 
+    {
+        <p>@post.Text[0..1000] ...</p>
+    }
+    else
+    {
+        <p>@post.Text </p>
+    }
+    <center>
+        <br>
+        <a asp-page="./View" asp-route-name="@blog.UserName"> Check out @author blog</a>
+        <br>
+    </center>
+}

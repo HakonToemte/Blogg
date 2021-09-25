@@ -1,4 +1,4 @@
-@page "{id:int}"
+@page
 @model ViewModel
 @{
     ViewData["Title"] = "View";
@@ -7,9 +7,17 @@
         Layout = "_LoggedLayout";
     }
 }
-<center>
-    <h1 class="display-4" style=center>@Model.Post.Title</h1>
-    <h2 class="display-4" style=center>Written by @Model.Author.UserName</h2>
+@{string author = (Model.Author.UserName + "s");
+ <center>
+        <h1 class="display-4" style=center>@author blog</h1>
 </center>
-<br>
-<p class="bread"> @Model.Post.Text</p>
+}
+@foreach (Post post in Model.Posts.Reverse()){
+    <center>
+        <h1 class="display-4" style=center>@post.Title</h1>
+    </center>
+    <br>
+    <p class="bread"> @post.Text</p>
+    <br>
+    <br>
+}

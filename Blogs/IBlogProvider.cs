@@ -5,7 +5,7 @@ namespace Blogg
 {
     public interface IBlogProvider
     {
-        Task<Blog[]> GetBlogs();
+        Task<ICollection<Blog>> GetBlogs();
         Task AddBlog(Blog blog);
         Task<Blog> GetBlog(string name);
         Task UpdateBlog(int id, Blog blog);

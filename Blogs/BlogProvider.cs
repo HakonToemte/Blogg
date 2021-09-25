@@ -15,11 +15,10 @@ namespace Blogg
             _blogContext = blogContext;
         }
 
-        public async Task<Blog[]> GetBlogs()
+        public async Task<ICollection<Blog>> GetBlogs()
         {
-            var list = await _blogContext.Blogs.ToListAsync();
-            Blog[] new_list = list.ToArray();
-            return new_list;
+            var list = _blogContext.Blogs.Where(b => b.UserId == b.UserId).Include(b=>b.Posts).ToList();
+            return await Task.Run(() => list);
         }
 
         public Task AddBlog(Blog blog){
@@ -29,8 +28,7 @@ namespace Blogg
         }
 
         public async Task<Blog> GetBlog(string name){
-            var blog = _blogContext.Blogs.Where(b => b.UserName == name)
-                    .FirstOrDefault();
+            var blog = _blogContext.Blogs.Where(b => b.UserName == name).Include(b=>b.Posts).FirstOrDefault();
             if (blog == null)
             {
                 return null;

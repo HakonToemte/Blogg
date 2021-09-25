@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,22 +11,37 @@ namespace Blogg.Pages
 {
     public class IndexModel : PageModel
     {
-        public List<Post> Posts;
+        private readonly IBlogProvider _blogprovider;
+        [BindProperty]
+        public ICollection<Blog> Blogs{get;set;}
         public string LoggedUser;
-        private IPostProvider _postprovider {get;}
-        public IndexModel(IPostProvider Provider)
+
+        public IndexModel(IBlogProvider Provider)
         {
-            _postprovider = Provider;
+            _blogprovider = Provider;
         }
-        public async Task<IActionResult> OnGetAsync()
+
+        public async Task<IActionResult> OnGetAsync(string name="")
         {
-            var posts = await _postprovider.GetPosts();
-            Posts = posts.ToList();
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("_Name")))
+            if (HttpContext.Session.GetString("_Name") != null)
             {
                 LoggedUser = HttpContext.Session.GetString("_Name");
             }
+            if (name=="")
+            {
+                Blogs = await _blogprovider.GetBlogs();
+            }
+            else{
+                var blog =await _blogprovider.GetBlog(name); //get 1 specific blog
+                Blogs = new Blog[]{blog};
+            }
+            if (Blogs == null)
+            {
+                return NotFound();
+            }
             return Page();
         }
+
     }
+
 }
