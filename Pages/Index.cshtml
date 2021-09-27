@@ -8,24 +8,26 @@
     }
 }
 @foreach (Blog blog in Model.Blogs){
-    string author = (blog.UserName + "s");
-    Post post =blog.Posts.Last();
-    <center>
-        <h1 class="display-4" style=center>@author blog</h1>
-        <h1 class="display-4" style=center>@post.Title</h1>
-    </center>
-    <br>
-    if (post.Text.Length > 1000) 
-    {
-        <p>@post.Text[0..1000] ...</p>
-    }
-    else
-    {
-        <p>@post.Text </p>
-    }
-    <center>
+    if (blog.Posts.Count > 0){
+        string author = (blog.UserName + "s");
+        Post post =blog.Posts.Last();
+        <center>
+            <h1 class="display-4" style=center>@author blog</h1>
+            <h1 class="display-4" style=center>@post.Title</h1>
+        </center>
         <br>
-        <a asp-page="./View" asp-route-name="@blog.UserName"> Check out @author blog</a>
-        <br>
-    </center>
+        if (post.Text.Length > 1000) 
+        {
+            <p>@post.Text[0..1000] ...</p>
+        }
+        else
+        {
+            <p>@post.Text </p>
+        }
+        <center>
+            <br>
+            <a asp-page="./View" asp-route-name="@blog.UserName"> Check out @author blog</a>
+            <br>
+        </center>
+    }
 }

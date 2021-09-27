@@ -45,18 +45,6 @@ namespace Blogg.Migrations
                 name: "IX_posts_BlogUserId",
                 table: "posts",
                 column: "BlogUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_posts_Title",
-                table: "posts",
-                column: "Title",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_users_UserName",
-                table: "users",
-                column: "UserName",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

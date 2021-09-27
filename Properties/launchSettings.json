@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "UiS.Dat240.Lab2": {
+    "Blogg": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

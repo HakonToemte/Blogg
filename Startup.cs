@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,6 @@ namespace Blogg
         {
             services.AddSession(options =>
             {
-
             });
             services.AddDbContext<BlogContext>(
                 options => options.UseSqlite("Data Source=sqlitedb1;Cache=Shared"));
@@ -48,7 +48,6 @@ namespace Blogg
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();

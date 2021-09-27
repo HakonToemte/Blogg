@@ -57,6 +57,10 @@ namespace Blogg.Pages
             {
                 return NotFound();
             }
+            if (postToUpdate.Blog.UserName != HttpContext.Session.GetString("_Name")){ // If person logged in is not the author of the post.
+                Error = "You are not the author of this post";                         // Dont allow them to edit.
+                return Page();
+            }
             if (await TryUpdateModelAsync<Post>(
                 postToUpdate,
                 "post",

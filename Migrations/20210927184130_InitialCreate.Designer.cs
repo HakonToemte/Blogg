@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogg.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20210924192403_InitialCreate")]
+    [Migration("20210927184130_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,9 +32,6 @@ namespace Blogg.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("UserName")
-                        .IsUnique();
-
                     b.ToTable("users");
                 });
 
@@ -56,9 +53,6 @@ namespace Blogg.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BlogUserId");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
 
                     b.ToTable("posts");
                 });

@@ -27,12 +27,18 @@ namespace Blogg.Pages
             if (HttpContext.Session.GetString("_Name") != null)
             {
                 LoggedUser = HttpContext.Session.GetString("_Name");
+                if (name == null)
+                {
+                    name = HttpContext.Session.GetString("_Name"); // If not specified, show "my blog".
+                }
             }
-            if (name == null)
+            else
             {
-                return NotFound();
+                if (name == null)
+                {
+                    return NotFound();
+                }
             }
-
             Author = await _blogprovider.GetBlog(name);
             Posts=Author.Posts;
             Console.WriteLine(Author.Posts);

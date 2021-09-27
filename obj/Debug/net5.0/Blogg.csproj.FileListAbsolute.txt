@@ -183,3 +183,4 @@ C:\Users\hakon\OneDrive\Documents\GitHub\Blogg\obj\Debug\net5.0\Blogg.Views.pdb
 C:\Users\hakon\OneDrive\Documents\GitHub\Blogg\obj\Debug\net5.0\Blogg.csproj.CopyComplete
 C:\Users\hakon\OneDrive\Documents\GitHub\Blogg\obj\Debug\net5.0\Blogg.genruntimeconfig.cache
 C:\Users\hakon\OneDrive\Documents\GitHub\Blogg\obj\Debug\net5.0\Razor\Pages\_OldIndex.cshtml.g.cs
+C:\Users\hakon\OneDrive\Documents\GitHub\Blogg\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Certificate.dll

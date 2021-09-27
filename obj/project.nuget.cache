@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "5e+gmNkLpjIHxe/bgO3fi+f/qpZtXVNqdkPWbABt7r/4tLmZkJrWW/RFvpy8JnUxxNLULwQiU9zRcFHSZbth8g==",
+  "dgSpecHash": "wdNwm/0mSEDoFGp7FCdIRjmvQ/0gKG/bEi6C4gL8e2DoyTuRT9JJ7Y60uHrzcSYwxTSBZRZ7vkvAKYE7ELLBZw==",
   "success": true,
   "projectFilePath": "C:\\Users\\hakon\\OneDrive\\Documents\\GitHub\\Blogg\\Blogg.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hakon\\.nuget\\packages\\bcrypt-official\\0.1.109\\bcrypt-official.0.1.109.nupkg.sha512",
     "C:\\Users\\hakon\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\hakon\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\hakon\\.nuget\\packages\\microsoft.aspnetcore.authentication.certificate\\5.0.10\\microsoft.aspnetcore.authentication.certificate.5.0.10.nupkg.sha512",
     "C:\\Users\\hakon\\.nuget\\packages\\microsoft.aspnetcore.mvc.testing\\5.0.9\\microsoft.aspnetcore.mvc.testing.5.0.9.nupkg.sha512",
     "C:\\Users\\hakon\\.nuget\\packages\\microsoft.aspnetcore.testhost\\5.0.9\\microsoft.aspnetcore.testhost.5.0.9.nupkg.sha512",
     "C:\\Users\\hakon\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
