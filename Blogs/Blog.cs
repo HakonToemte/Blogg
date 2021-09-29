@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogg
 {
-    public class Blog
+    public class Blog : IdentityUser
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string PasswordHash { get; set; }
         public virtual ICollection<Post> Posts {get;set;}
     }
 }

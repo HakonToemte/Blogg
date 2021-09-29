@@ -18,7 +18,6 @@ namespace Blogg.Pages
         {
             _blogprovider = Provider;
         }
-
         public IActionResult OnGet()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("_Name")))
@@ -33,9 +32,8 @@ namespace Blogg.Pages
         [BindProperty]
         public Blog User_Attempt {get;set;}
         public string Error {get;set;}
-
         public async Task<IActionResult> OnPostAsync()
-        {                                               // TRY CATCH FOR DUPLICATE NAMES
+        {
                 var account = await _blogprovider.GetBlog(User_Attempt.UserName);
                 if (account == null || !BC.Verify(User_Attempt.PasswordHash, account.PasswordHash))
                 {
@@ -44,7 +42,6 @@ namespace Blogg.Pages
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("_Id", User_Attempt.UserId);
                     HttpContext.Session.SetString("_Name", User_Attempt.UserName);
                     return RedirectToPage("./Index");
                 }

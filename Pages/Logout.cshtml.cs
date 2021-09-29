@@ -16,7 +16,6 @@ namespace Blogg.Pages
         public IActionResult OnGet()
         {
             HttpContext.Session.Remove("_Name");  
-            HttpContext.Session.Remove("_Id");  
             return RedirectToPage("./Index");
         
         }

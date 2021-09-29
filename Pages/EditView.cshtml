@@ -1,5 +1,5 @@
 ﻿@page
-@model AdminModel
+@model EditViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Admin page";
@@ -13,6 +13,7 @@
 }
 
 <h1 class="display-4">Administrate your posts</h1>
+<p style="color:red">@Model.Error</p>
 <div class="table">
     <form method="post">
     <table class = "table table-bordered">

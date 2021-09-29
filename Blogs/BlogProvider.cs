@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace Blogg
 
         public async Task<ICollection<Blog>> GetBlogs()
         {
-            var list = _blogContext.Blogs.Where(b => b.UserId == b.UserId).Include(b=>b.Posts).ToList();
+            var list = _blogContext.Blogs.Where(b => b.Id== b.Id).Include(b=>b.Posts).ToList();
             return await Task.Run(() => list);
         }
 

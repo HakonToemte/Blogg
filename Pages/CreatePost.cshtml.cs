@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -33,7 +34,6 @@ namespace Blogg.Pages
         public Post Post {get; set; }
         public Blog LoggedUser{get; set;}
         public string Error {get;set;}
-
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (HttpContext.Session.GetString("_Name") != null)
@@ -41,7 +41,7 @@ namespace Blogg.Pages
                 LoggedUser = await _blogprovider.GetBlog(HttpContext.Session.GetString("_Name"));
             }
             else{
-                return RedirectToPage("./Admin");
+                return RedirectToPage("./Index");
             }
             Post.Blog = LoggedUser;
             string[] error_array = _postvalidator.IsValid(Post);
@@ -53,7 +53,7 @@ namespace Blogg.Pages
             try
             {                                            // TRY CATCH FOR DUPLICATE NAMES
                 await _postprovider.AddPost(Post);
-                return RedirectToPage("./Admin");
+                return RedirectToPage("./Index");
             }catch (Exception duplicate_error)
             {
                 if (duplicate_error.InnerException.Message.Contains("UNIQUE constraint failed")){

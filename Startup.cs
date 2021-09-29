@@ -4,6 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,11 +30,14 @@ namespace Blogg
             });
             services.AddDbContext<BlogContext>(
                 options => options.UseSqlite("Data Source=sqlitedb1;Cache=Shared"));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<BlogContext>();  
             services.AddScoped<IPostValidator, PostValidator>();
             services.AddScoped<IPostProvider, PostProvider>();
             services.AddScoped<IBlogValidator, BlogValidator>();
             services.AddScoped<IBlogProvider, BlogProvider>();
             services.AddRazorPages();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +57,7 @@ namespace Blogg
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -15624,6 +15624,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\hakon\\OneDrive\\Documents\\GitHub\\Blogg\\Pages\\EditView.cshtml",
+      "TargetPath": "Pages\\EditView.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\hakon\\OneDrive\\Documents\\GitHub\\Blogg\\Pages\\Error.cshtml",
       "TargetPath": "Pages\\Error.cshtml",
       "FileKind": "mvc"
@@ -15666,11 +15671,6 @@
     {
       "FilePath": "c:\\Users\\hakon\\OneDrive\\Documents\\GitHub\\Blogg\\Pages\\_ViewImports.cshtml",
       "TargetPath": "Pages\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\hakon\\OneDrive\\Documents\\GitHub\\Blogg\\Pages\\Admin.cshtml",
-      "TargetPath": "Pages\\Admin.cshtml",
       "FileKind": "mvc"
     },
     {

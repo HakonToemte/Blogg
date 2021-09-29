@@ -52,6 +52,10 @@ namespace Blogg.Pages
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            if (HttpContext.Session.GetString("_Name") != null)
+            {
+                LoggedUser = await _blogprovider.GetBlog(HttpContext.Session.GetString("_Name"));
+            }
             var postToUpdate = await _postprovider.GetPost(id);
             if (postToUpdate == null)
             {

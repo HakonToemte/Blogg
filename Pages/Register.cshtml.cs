@@ -40,8 +40,8 @@ namespace Blogg.Pages
             New_User.PasswordHash = BC.HashPassword(New_User.PasswordHash);
             try
             {                                            // TRY CATCH FOR DUPLICATE NAMES
-                await _blogprovider.AddBlog(New_User);
-                HttpContext.Session.SetInt32("_Id", New_User.UserId);
+                await _blogprovider.AddBlog(New_User); // Successful login
+                //var roleresult = 
                 HttpContext.Session.SetString("_Name", New_User.UserName);
                 return RedirectToPage("./Index");
             }catch (Exception duplicate_error)

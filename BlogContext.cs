@@ -1,17 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Reflection;    
 using System; 
 using System.Data;
 using System.Threading.Tasks;
-using Blogg;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using BC = BCrypt.Net.BCrypt;
 
 
 namespace Blogg
 {
     // This class should inherit from the EntityFramework DbContext
-    public class BlogContext : DbContext
+    public class BlogContext : IdentityDbContext
     {    
         public string DbPath { get; private set; }
         public BlogContext(DbContextOptions<BlogContext> options)
@@ -33,10 +35,10 @@ namespace Blogg
             modelBuilder.Entity<Post>(entity => {
                  entity.HasKey(k=>k.Id);
             });
-            modelBuilder.Entity<Blog>().ToTable("users");
-            modelBuilder.Entity<Blog>(entity => {
-                 entity.HasKey(f=>f.UserId);
-            });
+            //modelBuilder.Entity<Blog>().ToTable("users");
+            //modelBuilder.Entity<Blog>(entity => {
+            //     entity.HasKey(f=>f.Id);
+            //});
             base.OnModelCreating(modelBuilder);
         }
     }
