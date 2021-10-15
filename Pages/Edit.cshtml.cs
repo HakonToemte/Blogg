@@ -79,7 +79,7 @@ namespace Blogg.Pages
                 try
                 {                                            //FOR DUPLICATE NAMES
                     await _postprovider.UpdatePost(id, postToUpdate);
-                    return RedirectToPage("./Admin");
+                    return RedirectToPage("./EditView");
                 }catch (Exception duplicate_error)
                 {
                     if (duplicate_error.InnerException.Message.Contains("UNIQUE constraint failed")){
