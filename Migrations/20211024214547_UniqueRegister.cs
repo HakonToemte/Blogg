@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Blogg.Migrations
 {
-    public partial class IdentityBlog : Migration
+    public partial class UniqueRegister : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,6 @@ namespace Blogg.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -154,6 +153,23 @@ namespace Blogg.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "blogs",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_blogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_blogs_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "posts",
                 columns: table => new
                 {
@@ -167,9 +183,9 @@ namespace Blogg.Migrations
                 {
                     table.PrimaryKey("PK_posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_posts_AspNetUsers_BlogId",
+                        name: "FK_posts_blogs_BlogId",
                         column: x => x.BlogId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "blogs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -206,6 +222,12 @@ namespace Blogg.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_UserName",
+                table: "AspNetUsers",
+                column: "UserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -239,6 +261,9 @@ namespace Blogg.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "blogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

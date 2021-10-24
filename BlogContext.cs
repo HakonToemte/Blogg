@@ -35,10 +35,10 @@ namespace Blogg
             modelBuilder.Entity<Post>(entity => {
                  entity.HasKey(k=>k.Id);
             });
-            //modelBuilder.Entity<Blog>().ToTable("users");
-            //modelBuilder.Entity<Blog>(entity => {
-            //     entity.HasKey(f=>f.Id);
-            //});
+            modelBuilder.Entity<Blog>().ToTable("blogs");
+            modelBuilder.Entity<IdentityUser>(entity => {
+                 entity.HasIndex(f=>f.UserName).IsUnique();
+            });
             base.OnModelCreating(modelBuilder);
         }
     }

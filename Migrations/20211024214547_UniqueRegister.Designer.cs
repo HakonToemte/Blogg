@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogg.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20210929111740_IdentityBlog")]
-    partial class IdentityBlog
+    [Migration("20211024214547_UniqueRegister")]
+    partial class UniqueRegister
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,10 +101,6 @@ namespace Blogg.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
@@ -154,9 +150,10 @@ namespace Blogg.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -242,7 +239,7 @@ namespace Blogg.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.HasDiscriminator().HasValue("Blog");
+                    b.ToTable("blogs");
                 });
 
             modelBuilder.Entity("Blogg.Post", b =>
@@ -301,6 +298,15 @@ namespace Blogg.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Blogg.Blog", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("Blogg.Blog", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
